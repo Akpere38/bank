@@ -1,0 +1,23 @@
+{% include "admin-header.html" %}
+{% from "bootstrap5/form.html" import render_form %}
+
+<h1>
+Enter the username of the account you want to block or restrict
+</h1>
+
+<div class="container">
+
+{{ render_form(form1) }}
+</div>
+
+
+<h1>Enter the username of the account you want to unblock</h1>
+
+
+<div class="container">
+
+{{ render_form(form2) }}
+</div>
+
+</body>
+</html>

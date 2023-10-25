@@ -1,0 +1,30 @@
+{% from "bootstrap5/form.html" import render_form %}
+{% include "header2.html" %}
+<style>
+    .failed{
+    width:50px;
+
+    }
+</style>
+
+<body>
+<div class="container" style="width:400px">
+    <div style="text-align: center; justify-align: center;">
+        <img src="static/images/payment-failure.png" width="250" height="250">
+
+            <h1>Transaction Failed</h1>
+        <p>Your transaction could not be completed due to some abnormality, please try again later or contact support for help</p>
+
+        <button class="btn btn-danger" onclick="window.location.href='{{url_for('customer_service')}}'">
+            Contact Support
+
+        </button>
+
+        
+
+    </div>
+
+</div>
+
+</body>
+</html>

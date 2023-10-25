@@ -1,0 +1,233 @@
+{% from "bootstrap5/form.html" import render_form %}
+{% include "header2.html" %}
+    <style>
+        .contain {
+    float: left;
+    width: 50%; /* Adjust the width as needed */
+    box-sizing: border-box; /* Include padding and border in the width */
+    padding: 20px;
+
+}
+
+
+
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+}
+
+ul#link-list {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+}
+
+ul#link-list li {
+    margin: 10px;
+}
+
+ul#link-list li a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.hidden-div {
+    display: none;
+}
+
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="contain" style="text-align:left;">
+        <p>Container 1</p>
+         <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"></path>
+  <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"></path>
+</svg>
+    <br/>
+    <p style="font-size:20px;margin-top:10px;">Hi, [Name]</p>
+    <br/>
+
+
+
+    <div style="width:500px;">
+        <div class="list-group">
+            <ul id="link-list">
+                <li>
+                    <a href="#" data-target="div1" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+      <img src="https://github.com/twbs.png" alt="twbs" width="32" height="32" class="rounded-circle flex-shrink-0">
+      <div class="d-flex gap-2 w-100 justify-content-between">
+        <div>
+          <h6 class="mb-0">Account Limit</h6>
+          <p class="mb-0 opacity-75">View Your transaction limits</p>
+        </div>
+      </div>
+    </a>
+                </li>
+                <li>
+                    <a href="#" data-target="div2" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+      <img src="https://github.com/twbs.png" alt="twbs" width="32" height="32" class="rounded-circle flex-shrink-0">
+      <div class="d-flex gap-2 w-100 justify-content-between">
+        <div>
+          <h6 class="mb-0">Pay Me</h6>
+          <p class="mb-0 opacity-75">Receive payment for your business</p>
+        </div>
+      </div>
+    </a>
+                </li>
+
+                <li>
+                    <a href="#" data-target="div3" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+      <img src="https://github.com/twbs.png" alt="twbs" width="32" height="32" class="rounded-circle flex-shrink-0">
+      <div class="d-flex gap-2 w-100 justify-content-between">
+        <div>
+          <h6 class="mb-0">Pay ID</h6>
+          <p class="mb-0 opacity-75">Generate a unique code for online transactions</p>
+        </div>
+      </div>
+    </a>
+                </li>
+
+                <li>
+                    <a href="#" data-target="div4" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+      <img src="https://github.com/twbs.png" alt="twbs" width="32" height="32" class="rounded-circle flex-shrink-0">
+      <div class="d-flex gap-2 w-100 justify-content-between">
+        <div>
+          <h6 class="mb-0">Statements & Reports</h6>
+          <p class="mb-0 opacity-75">Request and download monthly statements</p>
+        </div>
+      </div>
+    </a>
+                </li>
+
+                <li>
+                    <a href="#" data-target="div5" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+      <img src="https://github.com/twbs.png" alt="twbs" width="32" height="32" class="rounded-circle flex-shrink-0">
+      <div class="d-flex gap-2 w-100 justify-content-between">
+        <div>
+          <h6 class="mb-0">Bank Card/Account</h6>
+          <p class="mb-0 opacity-75">Add a payment option</p>
+        </div>
+      </div>
+    </a>
+                </li>
+
+                <li>
+                     <a href="#" data-target="div6" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+      <img src="https://github.com/twbs.png" alt="twbs" width="32" height="32" class="rounded-circle flex-shrink-0">
+      <div class="d-flex gap-2 w-100 justify-content-between">
+        <div>
+          <h6 class="mb-0">Referrals</h6>
+          <p class="mb-0 opacity-75">Earn money when your friends join us</p>
+        </div>
+      </div>
+    </a>
+                </li>
+
+                <li>
+                    <a href="#" data-target="div7" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+      <img src="https://github.com/twbs.png" alt="twbs" width="32" height="32" class="rounded-circle flex-shrink-0">
+      <div class="d-flex gap-2 w-100 justify-content-between">
+        <div>
+          <h6 class="mb-0">Security Center</h6>
+          <p class="mb-0 opacity-75"> Change your Banking Pin</p>
+        </div>
+      </div>
+    </a>
+                </li>
+            </ul>
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+    </div>
+    <div class="contain">
+        <p>Container 2</p>
+        <div id="div1" class="hidden-div" style="width:500px;">
+        <h2>Div 1 Content</h2>
+        <p>This is the content for Div 1.</p>
+    </div>
+
+    <div id="div2" class="hidden-div">
+        <h2>Div 2 Content</h2>
+        <p>This is the content for Div 2.</p>
+    </div>
+
+    <div id="div3" class="hidden-div">
+        <h2>Div 3 Content</h2>
+        <p>This is the content for Div 3.</p>
+    </div>
+
+         <div id="div4" class="hidden-div">
+        <h2>Div 4 Content</h2>
+        <p>This is the content for Div 4.</p>
+    </div>
+
+         <div id="div5" class="hidden-div">
+        <h2>Div 5 Content</h2>
+        <p>This is the content for Div 5.</p>
+    </div>
+
+
+     <div id="div6" class="hidden-div">
+        <h2>Div 6 Content</h2>
+        <p>This is the content for Div 6.</p>
+    </div>
+
+         <div id="div7" class="hidden-div">
+        <h2>Div 7 Content</h2>
+        <p>This is the content for Div 7.</p>
+    </div>
+
+    </div>
+</div>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const linkList = document.getElementById('link-list');
+    const divs = document.querySelectorAll('.hidden-div');
+
+    linkList.addEventListener('click', function (event) {
+        const target = event.target;
+        if (target.tagName === 'A') {
+            const divId = target.getAttribute('data-target');
+            showDiv(divId);
+        }
+    });
+
+    function showDiv(divId) {
+        divs.forEach(function (div) {
+            if (div.id === divId) {
+                div.style.display = 'block';
+            } else {
+                div.style.display = 'none';
+            }
+        });
+    }
+});
+
+</script>
+</body>
+</html>

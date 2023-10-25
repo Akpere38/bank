@@ -1,0 +1,112 @@
+{% from "bootstrap5/form.html" import render_form %}
+{% include "header2.html" %}
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #007bff;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}
+
+main {
+    margin: 20px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+footer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+</style>
+    <header>
+        <h1>Bank Transaction History</h1>
+    </header>
+    <main>
+        <table id="transaction-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Transaction data will be populated here -->
+            </tbody>
+        </table>
+    </main>
+    <footer>
+        <button id="load-button">Load Transactions</button>
+    </footer>
+    <script src="script.js"></script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const transactionTable = document.getElementById('transaction-table');
+    const loadButton = document.getElementById('load-button');
+
+    loadButton.addEventListener('click', function () {
+        // Simulate loading transaction data (replace this with your data retrieval logic)
+        const transactions =
+        [{% for transaction in transactions:%}
+            { date: '{{ transaction.date }}', description: '{{ transaction.type }}', amount: {{ transaction.amount }} },
+            // Add more transaction data as needed
+        {% endfor %}];
+
+
+        // Clear the existing table content
+        transactionTable.querySelector('tbody').innerHTML = '';
+
+        // Populate the table with transaction data
+        transactions.forEach(transaction => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${transaction.date}</td>
+                <td>${transaction.description}</td>
+                <td>${transaction.amount}</td>
+            `;
+            transactionTable.querySelector('tbody').appendChild(row);
+        });
+    });
+});
+
+</script>
+</body>
+</html>

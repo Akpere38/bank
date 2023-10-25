@@ -1,0 +1,97 @@
+{% from "bootstrap5/form.html" import render_form %}
+{% include "header2.html" %}
+<body>
+    <!-- First Modal -->
+    <div class="modal" id="myModal1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title">Confirm Transaction</h1>
+                </div>
+                <div class="modal-body">
+                   <p>Are you sure you want to send the sum of ${{amount}} to this account {{account_no}} </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal2">Yes, Proceed</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Second Modal -->
+    <div class="modal" id="myModal2">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="row">
+
+        <!-- Modal -->
+        <div class="container height-10 d-flex justify-content-center align-items-center"> <div class="position-relative"> <div class="card p-2 text-center"> <h3>Please enter Your personal banking pin <br> to verify your account</h3> <div> <span>A code has been sent to</span> <small>*******9897</small> </div>
+            <form method="POST" action="">
+
+            <div id="otp" class="inputs d-flex flex-row justify-content-center mt-2">
+
+                <input  name="code1" class="m-2 text-center form-control rounded" type="text" id="first" maxlength="1" />
+                <input  name="code2" class="m-2 text-center form-control rounded" type="text" id="second" maxlength="1" />
+                <input  name="code3" class="m-2 text-center form-control rounded" type="text" id="third" maxlength="1" />
+                <input name="code4" class="m-2 text-center form-control rounded" type="text" id="fourth" maxlength="1" />
+                <input name="code5" class="m-2 text-center form-control rounded" type="text" id="fifth" maxlength="1" />
+                <input  name="code6" class="m-2 text-center form-control rounded" type="text" id="sixth" maxlength="1" />
+            </div> <div class="mt-4">
+<!--          <button name="yes" type="submit" class="btn btn-danger px-4 validate">Validate</button>-->
+                {{ form.hidden_tag() }}
+        {{ form.csrf_token }}
+
+        <!-- Render the 'name' field with a custom class -->
+        {{ form.yes(class='btn btn-success') }}
+            </div>
+            </form>
+         </div> <div class="card-2"> <div class="content d-flex justify-content-center align-items-center"> <span>Didn't get the code</span> <a href="#" class="text-decoration-none ms-3">Resend(1/3)</a> </div> </div> </div>
+    </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal" id="myModal3">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Open the first modal -->
+
+        <script src="static/js/js2.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#myModal1").modal('show');
+        });
+
+
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+    const updateButton = document.getElementById('update-button');
+    const contentDiv = document.getElementById('content-div');
+
+    updateButton.addEventListener('click', function() {
+        // Send an AJAX request to fetch new data from Flask
+        fetch('/get_new_data')
+            .then(response => response.text())
+            .then(data => {
+                // Update the content of the <div>
+                contentDiv.innerHTML = data;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
+});
+
+    </script>
+</body>
+</html>

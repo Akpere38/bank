@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Finances &mdash; Website Template by Colorlib</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/jquery-ui.css">
+    <link rel="stylesheet" href="static/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="static/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="static/css/owl.theme.default.min.css">
+
+    <link rel="stylesheet" href="static/css/jquery.fancybox.min.css">
+
+    <link rel="stylesheet" href="static/css/bootstrap-datepicker.css">
+
+    <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
+
+    <link rel="stylesheet" href="static/css/aos.css">
+
+    <link rel="stylesheet" href="static/css/style.css">
+
+  </head>
+  <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+
+
+  <div id="overlayer"></div>
+  <div class="loader">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+
+
+  <div class="site-wrap">
+
+    <div class="site-mobile-menu site-navbar-target">
+      <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close mt-3">
+          <span class="icon-close2 js-menu-toggle"></span>
+        </div>
+      </div>
+      <div class="site-mobile-menu-body"></div>
+    </div>
+
+
+    <header class="site-navbar js-sticky-header site-navbar-target" role="banner">
+
+
+      <div class="container">
+        <div class="row align-items-center">
+
+          <div class="col-6 col-xl-2">
+            <h1 class="mb-0 site-logo" style="font-size:5px;"><a href="{{url_for('home')}}" class="h2 mb-0">Detriot Savings Bank<span class="text-primary">.</span> </a></h1>
+          </div>
+
+          <div class="col-12 col-md-10 d-none d-xl-block">
+            <nav class="site-navigation position-relative text-right" role="navigation">
+
+              <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
+                <li><a href="{{url_for('home')}}#home-section" class="nav-link">Home</a></li>
+                <li class="has-children">
+                  <a href="{{url_for('home')}}#about-section" class="nav-link">About Us</a>
+                  <ul class="dropdown">
+                    <li><a href="{{url_for('home')}}#team-section" class="nav-link">Team</a></li>
+                    <li><a href="{{url_for('home')}}#faq-section" class="nav-link">FAQ</a></li>
+                    <li><a href="{{url_for('home')}}#gallery-section" class="nav-link">Gallery</a></li>
+                    <li><a href="{{url_for('home')}}#services-section" class="nav-link">Services</a></li>
+                    <li><a href="{{url_for('home')}}#testimonials-section" class="nav-link">Testimonials</a></li>
+                  </ul>
+                </li>
+
+
+                <li><a href="{{url_for('home')}}#contact-section" class="nav-link">Contact</a></li>
+
+                <li><a href="{{url_for('login')}}" class="nav-link"><button type="button" class="btn btn-primary">Login</button></a></li>
+                <li class="has-children"><a href="{{url_for('sign_up')}}" class="nav-link"><button type="button" class="btn btn-light">Sign Up</button></a>
+                <ul class="dropdown">
+                    <li><a href="{{url_for('register')}}" class="nav-link"><button type="button" class="btn btn-light">Register</button></a></li>
+                </ul>
+                </li>
+
+              </ul>
+            </nav>
+          </div>
+
+
+          <div class="col-6 d-inline-block d-xl-none ml-md-0 py-3" style="position: relative; top: 3px;"><a href="#" class="site-menu-toggle js-menu-toggle float-right"><span class="icon-menu h3"></span></a></div>
+
+        </div>
+      </div>
+
+    </header>
+
+
+
+  </body>
+</html>

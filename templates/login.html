@@ -1,0 +1,27 @@
+{% from "bootstrap5/form.html" import render_form %}
+{% include "header.html" %}
+<section  class="img js-fullheight" style="background-image: url(static/images/login.jpg); height: 687px;">
+<div class="ftco-section" style="margin-bottom:150px">
+<div class="container" style="color: white;">
+<div class="row justify-content-center">
+<div class="col-md-6 text-center mb-5">
+        <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal">Secure Bank</h1>
+</div>
+</div>
+<div class="row justify-content-center">
+<div class="col-md-6 col-lg-4">
+<div class="login-wrap p-0">
+<h6 class="mb-4 text-center">Have an account?</h6>
+    {{ render_form(form, class) }}
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+{% include "footer.html" %}
+
+</body>
+</html>

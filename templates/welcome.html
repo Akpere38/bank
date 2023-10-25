@@ -1,0 +1,201 @@
+{% from "bootstrap5/form.html" import render_form %}
+{% include "header2.html" %}
+<style>
+    /* CSS in a separate stylesheet or inline style */
+#popup-container {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+}
+
+#overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+</style>
+<body>
+
+       <!-- Popup Container -->
+       {% if not active: %}
+    <div id="popup-container">
+        <div id="popup-content">
+            <!-- Popup Content Goes Here -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" fill="currentColor" class="bi bi-exclamation-octagon-fill" viewBox="0 0 16 16">
+  <path d="M11.46.146A.5.5 0 0 0 11.107 0H4.893a.5.5 0 0 0-.353.146L.146 4.54A.5.5 0 0 0 0 4.893v6.214a.5.5 0 0 0 .146.353l4.394 4.394a.5.5 0 0 0 .353.146h6.214a.5.5 0 0 0 .353-.146l4.394-4.394a.5.5 0 0 0 .146-.353V4.893a.5.5 0 0 0-.146-.353L11.46.146zM8 4c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995A.905.905 0 0 1 8 4zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+</svg>
+            <br/>
+            <h1>Account Restricted</h1>
+            <p>Your account has been restricted due to suspicious activities.<br/>Please contact customer support for assistance.</p>
+            <p></p>
+            <button class="btn btn-success" id="close-popup" onclick="window.location.href='{{url_for('customer_service')}}'">Contact support</button>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div id="overlay"></div>
+       {% endif %}
+
+
+
+    <section class="account-summary">
+        <div class="container">
+            <h2 style="font-weight:100;">Welcome Back {{account.first_name}}</h2>
+            <div class="contain" style="width:370px;">
+            <h3>Account Summary</h3>
+        <div class="account" style="width:300px;">
+            <h3>Checking Account</h3>
+            <p>Account Number: {{account.checking_account}}</p>
+            <p>Balance: ${{account.checking_balance}}</p>
+        </div>
+        <div class="account" style="width:300px;">
+            <h3>Savings Account</h3>
+            <p>Account Number: {{account.savings_account}}</p>
+            <p>Balance: ${{account.savings_balance}}</p>
+        </div>
+
+        </div>
+
+            <div class="contain" style="width:700px;">
+                <div id="myCarousel" class="carousel slide" data-ride="carousel" style="margin-top:50px;">
+    <!-- Indicators (optional) -->
+    <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+        <li data-target="#myCarousel" data-slide-to="3"></li>
+        <li data-target="#myCarousel" data-slide-to="4"></li>
+        <li data-target="#myCarousel" data-slide-to="5"></li>
+    </ol>
+
+    <!-- Slides -->
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="static/images/scroll1.png" alt="Slide 1">
+            <div class="carousel-caption">
+
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="static/images/scroll2.png" alt="Slide 2">
+            <div class="carousel-caption">
+
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="static/images/scroll3.png" alt="Slide 3">
+            <div class="carousel-caption">
+
+            </div>
+        </div>
+
+        <div class="carousel-item">
+            <img src="static/images/scroll4.jpg" alt="Slide 3">
+            <div class="carousel-caption">
+
+            </div>
+        </div>
+
+        <div class="carousel-item">
+            <img src="static/images/scroll5.png" alt="Slide 3">
+            <div class="carousel-caption">
+
+            </div>
+        </div>
+
+        <div class="carousel-item">
+            <img src="static/images/scroll6.png" alt="Slide 3">
+            <div class="carousel-caption">
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Controls -->
+    <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+            </div>
+
+        </div>
+    </section>
+    <br/><br/>
+
+
+    <section class="transactions">
+        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        <h2>Recent Transactions</h2>
+        <table>
+
+            <tr>
+                <th>Date</th>
+                <th>Transaction Type</th>
+                <th>Amount</th>
+                <th>Remark</th>
+            </tr>
+            {% set loop = 1 %}
+                {% for transaction in transactions:%}
+            <tr>
+                <td>{{ transaction.date }}</td>
+                <td>{{ transaction.type }}</td>
+                <td>${{ transaction.amount }}</td>
+                <td>{{transaction.remark}</td>
+            </tr>
+                {% endfor %}
+
+            <!-- Add more rows for transactions -->
+        </table>
+    </section>
+
+
+
+
+    <script>
+
+        // script.js
+const popupContainer = document.getElementById('popup-container');
+const overlay = document.getElementById('overlay');
+const closePopupButton = document.getElementById('close-popup');
+
+// Function to display the popup
+function displayPopup() {
+    popupContainer.style.display = 'block';
+    overlay.style.display = 'block';
+}
+
+// Function to close the popup
+function closePopup() {
+    popupContainer.style.display = 'none';
+    overlay.style.display = 'none';
+}
+
+// Event listener to close the popup when the close button is clicked
+closePopupButton.addEventListener('click', closePopup);
+
+// Display the popup when the page finishes loading
+window.onload = displayPopup;
+
+
+    </script>
+
+
+</body>
+</html>

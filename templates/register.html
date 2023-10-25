@@ -1,0 +1,30 @@
+{% from "bootstrap5/form.html" import render_form %}
+{% include "header.html" %}
+<section  class="img js-fullheight" id="signup_form" style="background-image: url(static/images/login.jpg); height: 687px;">
+<div class="ftco-section">
+<div class="container" style="color: white;">
+<div class="row justify-content-center">
+<div class="col-md-6 text-left mb-5">
+        <h6 >New to Online Banking?</h6>
+        <h6>Register Now</h6>
+    <form method="POST" action="">
+
+    <div class="form-group">
+{{ render_form(form)}}
+    </div>
+
+</form>
+
+
+
+</div>
+</div>
+</div>
+</div>
+</section>
+
+
+{% include "footer.html" %}
+
+</body>
+</html>

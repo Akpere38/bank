@@ -1,0 +1,123 @@
+{% from "bootstrap5/form.html" import render_form %}
+{% include "header2.html" %}
+
+
+
+<style>
+
+    .div-group {
+    display: inline-block;
+    margin: 10px;
+    text-align: left;
+}
+
+
+
+
+
+    body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+
+h1 {
+    text-align: center;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+}
+
+form {
+    text-align: center;
+}
+
+.form-group {
+    display: inline-block;
+    margin: 10px;
+    text-align: left;
+<!--        background-color: #007bff;-->
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.custom-submit-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.custom-submit-button:hover {
+    background-color: #0056b3;
+}
+
+</style>
+
+<section class="account-summary">
+
+
+
+<div class="container" style="margin-top:20px;">
+    <h2>
+    Send Money
+</h2>
+
+    <form method="POST" action="{{url_for('otp_code')}}">
+        {{ form.hidden_tag() }}
+        {{ form.csrf_token }}
+        <div class="form-group">
+            <div class="div-group">
+                <label for="account_type" >Select Account Type:</label>
+             <br/><br/>
+                  <label for="amount">Amount:</label>
+                <br/><br/>
+             <label for="account_no">Receivers Account Number:</label>
+                <br/><br/>
+            <label for="routing_no">Routing Number:</label>
+                <br/>
+            </div>
+
+            <div class="div-group">
+                {{ form.account_type(class="form-control") }}
+                <br/>
+                {{ form.amount(class="form-control") }}
+                <br/>
+                {{ form.account_no(class="form-control") }}
+                <br/>
+                {{ form.routing_no(class="form-control")  }}
+            </div>
+
+        <div class="form-group">
+            <div class="div-group ">
+                 <label for="receivers_name">Receivers Account Name:</label>
+                <br/><br/>
+                <label for="bank_name">Bank Name:</label>
+                <br/><br/>
+            <label for="bank_address">Bank Address:</label>
+                <br/><br/>
+            <label for="narration">Narration:</label>
+                <br/>
+            </div>
+
+            <div class="div-group">
+                {{ form.receivers_name(class="form-control") }}
+                <br/>
+                {{ form.bank_name(class="form-control")}}
+                <br/>
+            {{ form.bank_address(class="form-control") }}
+                <br/>
+                {{ form.narration(class="form-control") }}
+            </div>
+
+        </div>
+            {{ form.send(class='btn btn-success') }}
+    </form>
+</div>
+</section>
+</body>
+</html>
