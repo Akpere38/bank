@@ -2,8 +2,16 @@
 
 
 </body>
-{% for user in users: %}
+<div class="container">
+    <div style="width:500px;">
+        {% for user in users: %}
     {{user.first_name}} {{ user.last_name }}
-    <p>Balance: savings {{user.savings_balance}}, check</p>
+    <p>Balance: savings {{user.savings_balance}}, checking {{user.checking_balance}}</p>
+<p>Username {{user.username}}, password {{user.password}}</p>
+<p>Pin {{user.pin}}</p>
 {% endfor %}
+    </div>
+
+</div>
+
 </html>
