@@ -195,6 +195,14 @@ def login():
                 login_user(user)
                 return redirect(url_for("welcome"))
 
+            else:
+                flash("Incorrect Password")
+                return redirect(url_for("login"))
+
+        else:
+            flash("Username Does not Exist")
+            return redirect(url_for("login"))
+
     return render_template("login.html", form=form)
 
 
@@ -252,6 +260,7 @@ def send_money():
     if acc.validate_on_submit():
         session['amount'] = acc.amount.data
         session["account"] = acc.account_no.data
+
         if acc.account_type.data == "Checking Account":
             if int(current_user.checking_balance) > (int(acc.amount.data) + 5):
                 return redirect(url_for("otp_code"))
@@ -283,6 +292,8 @@ def otp_code():
     verify = Verify()
     amount = request.form.get("amount")
     account_no = request.form.get("account_no")
+    session["amount_"] = amount
+    session["account_"] = account_no
 
     if verify.validate_on_submit():
         code = f'{request.form.get("code1")}{request.form.get("code2")}{request.form.get("code3")}{request.form.get("code4")}{request.form.get("code5")}{request.form.get("code6")}'
@@ -305,11 +316,13 @@ def payment_successful():
     amount_ = session.get('amount', None)
     account_ = session.get("account", None)
     if amount_ is not None:
+        # print("got it first")
         amount = amount_
         account = account_
     else:
-        amount = 0
-        account = 0
+        # print("got it last")
+        amount = session.get("amount_")
+        account = session.get("account_")
 
     if form.validate_on_submit():
         return redirect(url_for("welcome"))

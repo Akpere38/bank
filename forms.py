@@ -96,7 +96,6 @@ class AddMoney(FlaskForm):
 
 
 class AddTransaction(FlaskForm):
-    account_no = StringField(label="Account Number", validators=[DataRequired()])
     username = StringField(label="Username", validators=[DataRequired()])
     Date = StringField(label=" Date", validators=[DataRequired()])
     type = StringField(label="Type", validators=[DataRequired()])
