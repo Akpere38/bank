@@ -91,7 +91,6 @@ class AddMoney(FlaskForm):
     username = StringField(label="Username", validators=[DataRequired()])
     account_type = SelectField("Select your Account", choices=["Checking Account", "Savings Account"],
                                validators=[DataRequired()])
-    account_no = StringField(label="Account Number", validators=[DataRequired()])
     amount = StringField(label="Amount", validators=[DataRequired()])
     add = SubmitField("ADD")
 

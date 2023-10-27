@@ -11,7 +11,7 @@ Bootstrap5(app)
 app.config['SECRET_KEY'] = 'secretkey'
 
 """db connecting"""
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///bank.db"
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///bankk.db"
 db = SQLAlchemy()
 db.init_app(app)
 
@@ -41,8 +41,8 @@ class Accounts(UserMixin, db.Model):
     # routing_number = db.Column(db.String(250), nullable=False)
     username = db.Column(db.String(250))
     password = db.Column(db.String(250))
-    active = db.Column(db.Boolean, default=True), """stops the account from working at all"""
-    restricted = db.Column(db.Boolean, default=False), """stops the account from making payments to other bank"""
+    active = db.Column(db.Boolean, default=True)
+    restricted = db.Column(db.Boolean, default=False)
     # account_type = db.Column(db.String(250))
     pin = db.Column(db.String(250))
 
@@ -90,26 +90,28 @@ def signup_success():
 
 @app.route("/admin", methods=["GET", "POST"])
 def admin():
-    add_aza = AddAccount()
-    add_bar = AddMoney()
-    add_transaction = AddTransaction()
+    users = db.session.execute(db.Select(Accounts)).scalars().all()
 
-    if add_transaction.validate_on_submit():
-        user = db.session.execute(
-            db.select(Accounts).where(Accounts.username == add_transaction.username.data)).scalar()
-        new_transaction = Transactions(
-            user_id=user.id,
-            username=user.username,
-            date=add_transaction.Date.data,
-            amount=add_transaction.amount.data,
-            type=add_transaction.type.data,
-            remark=add_transaction.remark.data
-
-        )
-        db.session.add(new_transaction)
-        db.session.commit()
-
-        return "NEW BALANCE UPDATED"
+    # add_aza = AddAccount()
+    # add_bar = AddMoney()
+    # add_transaction = AddTransaction()
+    #
+    # if add_transaction.validate_on_submit():
+    #     user = db.session.execute(
+    #         db.select(Accounts).where(Accounts.username == add_transaction.username.data)).scalar()
+    #     new_transaction = Transactions(
+    #         user_id=user.id,
+    #         username=user.username,
+    #         date=add_transaction.Date.data,
+    #         amount=add_transaction.amount.data,
+    #         type=add_transaction.type.data,
+    #         remark=add_transaction.remark.data
+    #
+    #     )
+    #     db.session.add(new_transaction)
+    #     db.session.commit()
+    #
+    #     return "NEW BALANCE UPDATED"
 
     # elif add_aza.validate_on_submit():
     #     new_user = Accounts(
@@ -126,20 +128,20 @@ def admin():
     return render_template("admin.html")
 
 
-@app.route("/add-transaction")
+@app.route("/add-transaction", methods=["GET", "POST"])
 def add_transaction():
     add_transact = AddTransaction()
 
     if add_transact.validate_on_submit():
         user = db.session.execute(
-            db.select(Accounts).where(Accounts.username == add_transaction.username.data)).scalar()
+            db.select(Accounts).where(Accounts.username == add_transact.username.data)).scalar()
         new_transaction = Transactions(
             user_id=user.id,
             username=user.username,
-            date=add_transaction.Date.data,
-            amount=add_transaction.amount.data,
-            type=add_transaction.type.data,
-            remark=add_transaction.remark.data
+            date=add_transact.Date.data,
+            amount=add_transact.amount.data,
+            type=add_transact.type.data,
+            remark=add_transact.remark.data
 
         )
         db.session.add(new_transaction)
@@ -283,7 +285,9 @@ def send_money():
     if acc.validate_on_submit():
         session['amount'] = acc.amount.data
         session["account"] = acc.account_no.data
-        return redirect(url_for("otp_code"))
+        if acc.account_type.data == "Checking Account":
+            if int(current_user.checking_balance) > (int(acc.amount.data) + 5):
+                return redirect(url_for("otp_code"))
 
     return render_template("send-money.html", form=acc, send=send, )
 
@@ -385,4 +389,4 @@ def test():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, use_reloader=False, port=5009)
+    app.run(debug=True, use_reloader=False, port=5001)
