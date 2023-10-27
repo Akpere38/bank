@@ -2,4 +2,8 @@
 
 
 </body>
+{% for user in users: %}
+    {{user.first_name}} {{ user.last_name }}
+    <p>Balance: savings {{user.savings_balance}}, check</p>
+{% endfor %}
 </html>

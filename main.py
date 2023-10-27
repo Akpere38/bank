@@ -11,7 +11,7 @@ Bootstrap5(app)
 app.config['SECRET_KEY'] = 'secretkey'
 
 """db connecting"""
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///bankk.db"
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///bk.db"
 db = SQLAlchemy()
 db.init_app(app)
 
@@ -92,40 +92,7 @@ def signup_success():
 def admin():
     users = db.session.execute(db.Select(Accounts)).scalars().all()
 
-    # add_aza = AddAccount()
-    # add_bar = AddMoney()
-    # add_transaction = AddTransaction()
-    #
-    # if add_transaction.validate_on_submit():
-    #     user = db.session.execute(
-    #         db.select(Accounts).where(Accounts.username == add_transaction.username.data)).scalar()
-    #     new_transaction = Transactions(
-    #         user_id=user.id,
-    #         username=user.username,
-    #         date=add_transaction.Date.data,
-    #         amount=add_transaction.amount.data,
-    #         type=add_transaction.type.data,
-    #         remark=add_transaction.remark.data
-    #
-    #     )
-    #     db.session.add(new_transaction)
-    #     db.session.commit()
-    #
-    #     return "NEW BALANCE UPDATED"
-
-    # elif add_aza.validate_on_submit():
-    #     new_user = Accounts(
-    #         first_name=add_aza.first_name.data,
-    #         last_name=add_aza.last_name.data,
-    #         username=add_aza.username.data,
-    #         password=add_aza.password.data,
-    #         savings_account=add_aza.savings.data,
-    #         checking_account=add_aza.checking.data,
-    #     )
-    #     db.session.add(new_user)
-    #     db.session.commit()
-
-    return render_template("admin.html")
+    return render_template("admin.html", users=users)
 
 
 @app.route("/add-transaction", methods=["GET", "POST"])
