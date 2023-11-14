@@ -42,9 +42,10 @@
       </div>
         <h1>Success</h1>
         <p style="font-size: 15px;">Your transaction was successful<br/> We advise to keep this receipt for future reference</p><hr/>
-          <p>Payment Details:<br/>
-              Amount: €$moneyFormatter.format(${{amount}})<br/>
-                Account: ${{account}}.<br/>Transaction reference: ${authorizationCode}<br/>
+          <p><h3>Payment Details</h3>
+              Amount: ${{amount}}<br/>
+                Account: ${{account}}.
+              <br/>Account Name: {{name}}<br/>Transaction reference: ${authorizationCode}<br/>
               Date: [time] [date]</p><br/><br/>
 
           <h6 style="color:green; font-size: 15px;">Thank you for banking with us.</h6>

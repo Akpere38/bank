@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, EmailField, SelectField, DateField, \
-    BooleanField, FileField, TimeField
-from wtforms.validators import DataRequired, Email
+    BooleanField, FileField, TimeField, IntegerField
+from wtforms.validators import DataRequired, Email, InputRequired, NumberRange
 
 
 class SignUp(FlaskForm):
@@ -34,6 +34,10 @@ class Register(FlaskForm):
     username = StringField(default="Username", validators=[DataRequired()])
     password = PasswordField(default="Password", validators=[DataRequired()])
     confirm_password = PasswordField(default="Confirm Password", validators=[DataRequired()])
+    pin = IntegerField('PIN', validators=[
+        InputRequired(message='PIN is required'),
+        NumberRange(min=0, max=999999, message='PIN must be a 6-digit number')
+    ], render_kw={"placeholder": "Set a 6 digit online banking pin"})
     tmc = BooleanField("By clicking Register, you agree to all the terms and conditions")
     register = SubmitField("Register")
 
@@ -80,8 +84,8 @@ class AddAccount(FlaskForm):
     last_name = StringField("Last Name", validators=[DataRequired()])
     savings = StringField(label="Savings Account ", validators=[DataRequired()])
     checking = StringField(label="Checking Account ", validators=[DataRequired()])
-    username = StringField(default="Username", validators=[DataRequired()])
-    password = PasswordField(default="Password", validators=[DataRequired()])
+    username = StringField(default="Username", render_kw={"placeholder": "If required"})
+    password = PasswordField(default="Password", render_kw={"placeholder": "If required"})
     email = EmailField("Email", validators=[DataRequired(), Email()])
     phone_number = StringField("Phone Number", validators=[DataRequired()])
     add = SubmitField("ADD")
